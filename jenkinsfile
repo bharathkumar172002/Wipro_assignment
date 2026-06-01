@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+ 
+    tools {
+        maven 'Maven3'
+    }
+ 
+    stages {
+ 
+        stage('Checkout') {
+            steps {
+                git branch: 'master',
+                    url: 'https://github.com/bharathkumar172002/Wipro_assignment'
+            }
+        }
+ 
+        stage('Build') {
+            steps {
+                bat 'mvn clean'
+            }
+        }
+ 
+        stage('Compile') {
+            steps {
+                bat 'mvn compile'
+            }
+        }
+ 
+        stage('Test') {
+            steps {
+                bat 'mvn test'
+            }
+        }
+ 
+        stage('Package') {
+            steps {
+                bat 'mvn package'
+            }
+        }
+    }
+ 
+    post {
+        success {
+            echo 'Build Successful'
+        }
+ 
+        failure {
+            echo 'Build Failed'
+        }
+    }
+}
+ 
